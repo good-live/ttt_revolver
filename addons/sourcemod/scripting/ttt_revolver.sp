@@ -71,7 +71,6 @@ public Action TTT_OnItemPurchased(int client, const char[] itemshort)
 			}
 
 			g_bHasRevolver[client] = true;
-			CPrintToChatAll("%i has a revolver", client);
 		}
 	}
 	return Plugin_Continue;
@@ -94,7 +93,8 @@ public Action OnTakeDamageAlive(int iVictim, int &iAttacker, int &inflictor, flo
 			if(TTT_GetClientRole(iVictim) != TTT_TEAM_TRAITOR){
 				ForcePlayerSuicide(iAttacker);
 				CPrintToChatAll("%t", "Detective_Suicide");
-				return Plugin_Stop;
+				damage = 0.0;
+				return Plugin_Changed;
 			}
 			damage = float(GetClientHealth(iVictim) + GetClientArmor(iVictim));
 			return Plugin_Changed;
@@ -106,7 +106,11 @@ public Action OnTakeDamageAlive(int iVictim, int &iAttacker, int &inflictor, flo
 public bool HasPlayerRevolver(iClient)
 {
     int iWeapon = GetPlayerWeaponSlot(iClient, 1);
-    return (iWeapon == -1) ? false : (GetEntProp(iWeapon, Prop_Send, "m_iItemDefinitionIndex") == 64);
+    char sWeapon[64];
+    GetClientWeapon(iClient, sWeapon, sizeof(sWeapon));
+    if(((iWeapon == -1) ? false : (GetEntProp(iWeapon, Prop_Send, "m_iItemDefinitionIndex") == 64)) && strcmp(sWeapon, "weapon_deagle", false) == 0)
+    	return true;
+    return false;
 }  
 
 public Action CS_OnTerminateRound(float &delay, CSRoundEndReason &reason)
