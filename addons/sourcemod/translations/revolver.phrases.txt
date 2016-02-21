@@ -1,0 +1,7 @@
+"Phrases"
+{
+	"Detective_Suicide"
+	{
+		"en"		"[TTT] A detective has tried to kill a Innocent with th revolver ;/"
+	}
+}
