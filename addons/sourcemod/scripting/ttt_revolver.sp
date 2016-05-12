@@ -8,6 +8,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <ttt>
+#include <ttt_shop>
 #include <sdkhooks>
 #include <cstrike>
 #include <multicolors>
