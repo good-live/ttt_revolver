@@ -25,13 +25,17 @@ public Plugin myinfo =
 ConVar g_cRevolver_price;
 ConVar g_cRevolver_name;
 ConVar g_cRevolver_shots;
+ConVar g_cRevolver_prio;
 bool g_bHasRevolver[MAXPLAYERS + 1] = { false, ... };
 
 public void OnPluginStart()
 {
+	
 	g_cRevolver_price = CreateConVar("ttt_revolver_price", "6000", "The price of the revolver");
 	g_cRevolver_name = CreateConVar("ttt_revolver_name", "Revolver","The name of the revolver");
 	g_cRevolver_shots = CreateConVar("ttt_revolver_shots", "1", "The amount of shots that the revolver should have");
+	g_cRevolver_prio = CreateConVar("ttt_revolver_prio", "100", "The priority off the revolver");
+	
 	TTT_IsGameCSGO();
 	
 	AutoExecConfig();
@@ -47,7 +51,8 @@ public void OnAllPluginsLoaded()
 {
 	char sName[64];
 	g_cRevolver_name.GetString(sName, sizeof(sName));
-	TTT_RegisterCustomItem("revolver", sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE);
+	PrintToServer("Registering revolver");
+	TTT_RegisterCustomItem("revolver", sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue);
 }
 
 public Action TTT_OnItemPurchased(int client, const char[] itemshort)
@@ -79,7 +84,6 @@ public Action TTT_OnItemPurchased(int client, const char[] itemshort)
 
 public Action OnTakeDamageAlive(int iVictim, int &iAttacker, int &inflictor, float &damage, int &damagetype)
 {
-	CPrintToChatAll("Checki");
 	if(!TTT_IsRoundActive())
 		return Plugin_Continue;
 
