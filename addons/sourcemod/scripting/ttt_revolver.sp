@@ -110,10 +110,9 @@ public Action OnTakeDamageAlive(int iVictim, int &iAttacker, int &inflictor, flo
 
 public bool HasPlayerRevolver(iClient)
 {
-    int iWeapon = GetPlayerWeaponSlot(iClient, 1);
-    char sWeapon[64];
+    char sWeapon[32];
     GetClientWeapon(iClient, sWeapon, sizeof(sWeapon));
-    if(((iWeapon == -1) ? false : (GetEntProp(iWeapon, Prop_Send, "m_iItemDefinitionIndex") == 64)) && strcmp(sWeapon, "weapon_deagle", false) == 0)
+    if(strcmp(sWeapon, "weapon_revolver", false) == 0)
     	return true;
     return false;
 }  
