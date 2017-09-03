@@ -13,6 +13,8 @@
 #include <cstrike>
 #include <multicolors>
 
+#define ITEM_SHORT "FUCKYOU"
+
 public Plugin myinfo = 
 {
 	name = "ttt_revolver",
@@ -52,21 +54,18 @@ public void OnAllPluginsLoaded()
 	char sName[64];
 	g_cRevolver_name.GetString(sName, sizeof(sName));
 	PrintToServer("Registering revolver");
-	TTT_RegisterCustomItem("revolver", sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue);
+	TTT_RegisterCustomItem(ITEM_SHORT, sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue);
 }
 
 public Action TTT_OnItemPurchased(int client, const char[] itemshort)
 {
 	if(TTT_IsClientValid(client) && IsPlayerAlive(client))
 	{
-		if(strcmp(itemshort, "revolver", false) == 0)
+		if(StrEqual(itemshort, ITEM_SHORT, false))
 		{
-			if (TTT_GetClientRole(client) != TTT_TEAM_DETECTIVE)
-				return Plugin_Stop;
-
 			if (GetPlayerWeaponSlot(client, CS_SLOT_SECONDARY) != -1)
 				SDKHooks_DropWeapon(client, GetPlayerWeaponSlot(client, CS_SLOT_SECONDARY));
-
+			
 			int iRevolver = GivePlayerItem(client, "weapon_revolver");
 			if(iRevolver != -1){
 				EquipPlayerWeapon(client, iRevolver);
