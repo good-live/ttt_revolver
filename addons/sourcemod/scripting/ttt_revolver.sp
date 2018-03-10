@@ -54,7 +54,7 @@ public void OnAllPluginsLoaded()
 	char sName[64];
 	g_cRevolver_name.GetString(sName, sizeof(sName));
 	PrintToServer("Registering revolver");
-	TTT_RegisterCustomItem(ITEM_SHORT, sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue);
+	TTT_RegisterCustomItem(ITEM_SHORT, sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue, g_cDiscount.BoolValue);
 }
 
 public Action TTT_OnItemPurchased(int client, const char[] itemshort)
