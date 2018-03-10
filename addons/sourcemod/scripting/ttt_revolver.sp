@@ -28,6 +28,7 @@ ConVar g_cRevolver_price;
 ConVar g_cRevolver_name;
 ConVar g_cRevolver_shots;
 ConVar g_cRevolver_prio;
+ConVar g_cDiscount = null;
 bool g_bHasRevolver[MAXPLAYERS + 1] = { false, ... };
 
 public void OnPluginStart()
@@ -37,6 +38,7 @@ public void OnPluginStart()
 	g_cRevolver_name = CreateConVar("ttt_revolver_name", "Revolver","The name of the revolver");
 	g_cRevolver_shots = CreateConVar("ttt_revolver_shots", "1", "The amount of shots that the revolver should have");
 	g_cRevolver_prio = CreateConVar("ttt_revolver_prio", "100", "The priority off the revolver");
+	g_cDiscount = CreateConVar("ttt_discount", "0", "Should knockout discountable?");
 	
 	TTT_IsGameCSGO();
 	
