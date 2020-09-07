@@ -56,10 +56,10 @@ public void OnConfigsExecuted()
 	char sName[64];
 	g_cRevolver_name.GetString(sName, sizeof(sName));
 	PrintToServer("Registering revolver");
-	TTT_RegisterCustomItem(ITEM_SHORT, sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue, g_cDiscount.BoolValue);
+	TTT_RegisterShopItem(ITEM_SHORT, sName, g_cRevolver_price.IntValue, TTT_TEAM_DETECTIVE, g_cRevolver_prio.IntValue, 10, 10, OnItemPurchased);
 }
 
-public Action TTT_OnItemPurchased(int client, const char[] itemshort)
+public Action OnItemPurchased(int client, const char[] itemshort, int count, int price)
 {
 	if(TTT_IsClientValid(client) && IsPlayerAlive(client))
 	{
@@ -85,7 +85,7 @@ public Action TTT_OnItemPurchased(int client, const char[] itemshort)
 
 public Action OnTakeDamageAlive(int iVictim, int &iAttacker, int &inflictor, float &damage, int &damagetype)
 {
-	if(!TTT_IsRoundActive())
+	if(TTT_GetRoundStatus() != Round_Active)
 		return Plugin_Continue;
 
 	if(!TTT_IsClientValid(iVictim) || !TTT_IsClientValid(iAttacker))
